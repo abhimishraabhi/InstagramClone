@@ -4,51 +4,6 @@ import {useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 
 
-useEffect(()=>{
-
-    if(url)
-    {
-
-        fetch("/createpost",{
-            method:"post",    
-            headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"Bearer "+localStorage.getItem("jwt")
-                },
-                body:JSON.stringify({
-                    title
-                    ,body,
-                    pic:url
-                })
-            }).then(res=>res.json())
-            .then(data=>{
-    
-                
-    
-                if(data.error)
-                {
-                    M.toast({html: data.error,classes:"#b71c1c red darken-4"})
-                }
-                else
-                {
-                    
-                    M.toast({html:"created post successfully",classes:"#2e7d32 green darken-3"})
-                    History.push('./')
-                }
-                
-            }).catch(err=>{
-                console.log(err);
-            })
-
-
-
-
-
-    }
-
-
-}
-,{url})
 
 const CreatePost=()=>{
     
@@ -57,6 +12,53 @@ const CreatePost=()=>{
     const [body,setBody]=useState("");
     const [image,setImage]=useState("");
     const [url,setUrl]=useState("");
+
+
+    useEffect(()=>{
+
+        if(url)
+        {
+            
+            fetch("/createpost",{
+                method:"post",    
+                headers:{
+                        "Content-Type":"application/json",
+                        "Authorization":"Bearer "+localStorage.getItem("jwt")
+                    },
+                    body:JSON.stringify({
+                        title
+                        ,body,
+                        pic:url
+                    })
+                }).then(res=>res.json())
+                .then(data=>{
+        
+                    
+        
+                    if(data.error)
+                    {
+                        M.toast({html: data.error,classes:"#b71c1c red darken-4"})
+                    }
+                    else
+                    {
+                        
+                        M.toast({html:"created post successfully",classes:"#2e7d32 green darken-3"})
+                        History.push('./')
+                    }
+                    
+                }).catch(err=>{
+                    console.log(err);
+                })
+    
+    
+    
+    
+    
+        }
+    
+    
+    }
+    ,[url])
 
     const PostDetails=()=>{
         const data =new FormData()
@@ -75,36 +77,10 @@ const CreatePost=()=>{
             console.log(err)
         })
 
-        fetch("/createpost",{
-            method:"post",    
-            headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"Bearer "+localStorage.getItem("jwt")
-                },
-                body:JSON.stringify({
-                    title
-                    ,body,
-                    pic:url
-                })
-            }).then(res=>res.json())
-            .then(data=>{
-    
-                
-    
-                if(data.error)
-                {
-                    M.toast({html: data.error,classes:"#b71c1c red darken-4"})
-                }
-                else
-                {
-                    
-                    M.toast({html:"created post successfully",classes:"#2e7d32 green darken-3"})
-                    History.push('./')
-                }
-                
-            }).catch(err=>{
-                console.log(err);
-            })
+
+        
+
+
 
 
     }
