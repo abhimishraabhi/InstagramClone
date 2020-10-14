@@ -4,6 +4,7 @@ import {Link,useHistory} from 'react-router-dom'
 
 import {UserContext} from '../../App'
 import M from 'materialize-css'
+//import { reducer } from '../../reducers/userReducer'
 
 
 const Login=()=>{
@@ -11,11 +12,17 @@ const Login=()=>{
     const {state,dispatch}=useContext(UserContext)
 
 
-    const History=useHistory()
+    const history=useHistory()
     
     const [password,setPassword]=useState("")
     const [email,setEmail]=useState("")
     const PostData=()=>{
+        // if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+        //     M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
+        //     return
+        // }
+
+
         fetch("/signin",{
         method:"post",    
         headers:{
@@ -39,10 +46,11 @@ const Login=()=>{
             {
                 localStorage.setItem("jwt",data.token)
                  localStorage.setItem("user",JSON.stringify(data.user))
+                dispatch({type:"USER",payload:data.user})
 
-                 dispatch({type:"USER",payload:data.user})
+                 
                 M.toast({html:"signed in successfully",classes:"#2e7d32 green darken-3"})
-                History.push('./')
+                history.push('/')
             }
             
         }).catch(err=>{
