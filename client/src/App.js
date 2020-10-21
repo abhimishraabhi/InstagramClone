@@ -30,7 +30,7 @@ const Routing =()=>{
       dispatch({type:"USER",payload:user})
 
 
-      history.push('/')
+      
     }
     else
     {
