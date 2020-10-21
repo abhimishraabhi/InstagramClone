@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-const {ObjectId}=mongoose.Schema.Types;
+const {ObjectId}=mongoose.Schema.Types
 const postSchema=mongoose.Schema({
     title:{
         type:String,
@@ -14,7 +14,8 @@ const postSchema=mongoose.Schema({
         required:true
         
     },
-    like:[{type:ObjectId,ref:"User"}] ,
+    likes:[{type:ObjectId,ref:"User"}] ,
+    comments:[{type:String,postedBy:{type:ObjectId,ref:"User"}}],
     postedBy:{
 
         type:ObjectId,
