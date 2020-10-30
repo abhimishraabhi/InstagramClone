@@ -43,7 +43,7 @@ const CreatePost=()=>{
                     {
                         
                         M.toast({html:"created post successfully",classes:"#2e7d32 green darken-3"})
-                        History.push('./')
+                        history.push('/')
                     }
                     
                 }).catch(err=>{
