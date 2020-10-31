@@ -18,7 +18,7 @@ const requireLogin=require("../middleware/requireLogin")
 
 router.post('/signup',(req,res)=>{
     
-    const {name,email,password}=req.body;
+    const {name,email,password,pic}=req.body;
     if(!email||!password||!name)
     return res.status(422).json({error:"please fill all fields"});
 
@@ -32,7 +32,7 @@ router.post('/signup',(req,res)=>{
        .then(hashedpassword=>{
 
         const user=new User({
-            email,password:hashedpassword,name
+            email,password:hashedpassword,name,pic
         })
         user.save()
         .then(user=>{
