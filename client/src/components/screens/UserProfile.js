@@ -1,19 +1,22 @@
-import { findByLabelText } from '@testing-library/react';
+
 import React,{useEffect,useState,useContext} from 'react'
 import {UserContext} from "../../App" 
 import {useParams} from 'react-router-dom'
 
 const Profile=()=>{
     const [UserProfile,setProfile]=useState(null)
-    const [showfollow,setShowFollow]=useState(true)
     const {state,dispatch}=useContext(UserContext)
     const {userid}=useParams()
+    const [showfollow,setShowFollow] = useState(state?!state.following.includes(userid):true)
+
     useEffect(()=>{
         fetch(`/user/${userid}`,{
            headers:{ "Authorization":"Bearer "+localStorage.getItem('jwt')}
 
         }).then(res=>res.json())
         .then(result=>{
+
+            console.log(result)
 
             setProfile(result)
         })
@@ -30,9 +33,9 @@ const Profile=()=>{
             body:JSON.stringify({followId:userid})
             }).then(res=>res.json())
             .then(data=>{
-                    console.log(data)
-                    dispatch({type:'UPDATE',payload:{following:data.following,followers:data.followers}})
-                    localStorage.setItem('User',JSON.stringify(data))
+                    
+                    dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+                    localStorage.setItem('user',JSON.stringify(data))
                     setProfile((prevState)=>{
                         return {
                             ...prevState,
@@ -60,8 +63,8 @@ const Profile=()=>{
             }).then(res=>res.json())
             .then(data=>{
                     console.log(data)
-                    dispatch({type:'UPDATE',payload:{following:data.following,followers:data.followers}})
-                    localStorage.setItem('User',JSON.stringify(data))
+                    dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+                    localStorage.setItem('user',JSON.stringify(data))
                     
                     setProfile((prevState)=>{
                         const newFollower=prevState.user.followers.filter(item=>item!==data._id)

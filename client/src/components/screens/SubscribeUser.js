@@ -10,7 +10,7 @@ const Home=()=>{
 
     useEffect(()=>{
 
-        fetch('/allpost',{
+        fetch('/getsubpost',{
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }

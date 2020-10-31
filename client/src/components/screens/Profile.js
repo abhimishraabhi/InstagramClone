@@ -5,13 +5,17 @@ import {UserContext} from "../../App"
 const Profile=()=>{
     const [mypics,setPics]=useState([])
     const {state,dispatch}=useContext(UserContext)
+    
     useEffect(()=>{
         fetch('/mypost',{
            headers:{ "Authorization":"Bearer "+localStorage.getItem('jwt')}
 
         }).then(res=>res.json())
         .then(result=>{
+            
+
             setPics(result.mypost)
+            
         })
 
     },[])
@@ -24,10 +28,13 @@ const Profile=()=>{
                 </div>
                 <div>
                     <h4>{state?state.name:"loading"}</h4>
+                    <h4>{state?state.email:"loading"}</h4>
                     <div style={{display:"flex",justifyContent:"space-between",width:"108%"}}>
-                        <h6>{state?mypics.length:"0"} post</h6>
-                        <h6>{state?state.followers.length:"0"} followers</h6>
-                        <h6>{state?state.following.length:"0"} following</h6>
+                        <h6>{mypics.length} posts </h6>
+                        
+                     <h6>{state?state.followers.length:'loading'} followers</h6>
+                     <h6>{state?state.following.length:"loading"} following</h6>
+                     
 
                     </div>
 
