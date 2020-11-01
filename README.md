@@ -1,6 +1,7 @@
 # Instagram_Clone
 
 Instagram Clone (Both frontend and backend) created with Nodejs and Reactjs.
+# Deployed on Heroku
 
 # Features
 
